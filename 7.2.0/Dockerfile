@@ -1,4 +1,5 @@
-FROM php:7.3.12-apache
+FROM php:7.2.33-apache 
+#FROM php:7.3.12-apache
 LABEL maintainer="Francesco Bianco <info@javanile.org>"
 
 ENV VT_VERSION="7.2.0" \
@@ -9,12 +10,14 @@ COPY php.ini /usr/local/etc/php/
 COPY vtiger.json .symvol /usr/src/vtiger/
 COPY vtiger-ssl.* /etc/apache2/ssl/
 COPY 000-default.conf /etc/apache2/sites-available/
+COPY vtigersrc /usr/src/vtiger/vtigercrm/
+COPY ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y zlib1g-dev libc-client-dev libkrb5-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libxml2-dev cron rsyslog zip unzip socat vim nano && \
+    apt-get install --no-install-recommends -y zlib1g-dev libc-client-dev libkrb5-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libxml2-dev cron rsyslog zip unzip socat vim nano libzip-dev && \
     docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
     docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
-    docker-php-ext-install imap exif mysqli pdo pdo_mysql zip gd xml && \
+    docker-php-ext-install imap exif mysqli pdo pdo_mysql zip gd xml soap && \
     echo "cron.* /var/log/cron.log" >> /etc/rsyslog.conf && rm -fr /etc/cron.* && mkdir /etc/cron.d && \
     curl -o composer -sL https://getcomposer.org/composer.phar && \
     php composer global require javanile/http-robot:0.0.2 javanile/mysql-import:0.0.15 javanile/vtiger-cli:0.0.4 && \
@@ -24,15 +27,15 @@ RUN apt-get update && \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     a2enmod ssl && a2enmod rewrite && \
     cd /usr/src/vtiger && \
-    curl -o vtiger.tar.gz -L "http://sourceforge.net/projects/vtigercrm/files/vtiger%20CRM%207.2.0/Core%20Product/vtigercrm7.2.0.tar.gz" && \
-    tar -xzf vtiger.tar.gz && \
-    rm vtiger.tar.gz && \
+    # curl -o vtiger.tar.gz -L "http://sourceforge.net/projects/vtigercrm/files/vtiger%20CRM%207.2.0/Core%20Product/vtigercrm7.2.0.tar.gz" && \
+    # tar -xzf vtiger.tar.gz && \
+    # rm vtiger.tar.gz && \
     rm -fr /var/www/html && \
     mv "vtigercrm" /var/www/html && \
     vtiger permissions --fix && \
     mv .symvol /var/www/html && \
     mkdir -p volume /var/lib/vtiger && \
-    apt-get clean && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
+    apt-get clean && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* 
 
 COPY vtiger-*.sh /usr/local/bin/
 COPY vtiger-*.php /usr/src/vtiger/
@@ -52,7 +55,7 @@ WORKDIR /app
 
 ENV VT_ADMIN_USER="admin" \
     VT_ADMIN_PASSWORD="admin" \
-    VT_ADMIN_EMAIL="admin@localhost.lan" \
+    VT_ADMIN_EMAIL="jason@genesisresource.com" \
     VT_CURRENCY_NAME="USA, Dollars" \
     MYSQL_HOST="mysql" \
     MYSQL_DATABASE="vtiger"

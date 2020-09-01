@@ -4,6 +4,7 @@ services:
 
   vtiger:
     build: ${version}
+    image: grdev/vtiger:7.2.0.7
     environment:
       - VT_DEBUG=true
       - MYSQL_ROOT_PASSWORD=secret
@@ -16,9 +17,10 @@ services:
     links:
       - mysql
       - adminer
+    restart: always
 
   adminer:
-    image: javanile/adminer
+    image: Jason-Genesis/adminer
     environment:
       - MYSQL_DATABASE=vtiger
       - MYSQL_ROOT_PASSWORD=secret
@@ -34,6 +36,7 @@ services:
     volumes:
       - mysql:/var/lib/mysql:rw
       - ./:/vtiger:rw
+    restart: always
 
   debian:
     image: debian

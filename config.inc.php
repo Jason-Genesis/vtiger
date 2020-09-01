@@ -27,7 +27,19 @@ include 'vtigerversion.php';
 
 // more than 8MB memory needed for graphics
 // memory limit default value = 64M
-ini_set('memory_limit', '512M');
+ini_set('memory_limit', '1024M');
+
+//Added 8-18-2020
+$php_post_max_size = 52428800;
+// ini_set('post_max_size', '50M');
+$php_upload_max_filesize = 52428800;
+// ini_set('upload_max_filesize', '50M');
+$php_max_input_vars = 10000;
+// ini_set('max_input_vars', '10000');
+$php_max_input_time = 600;
+// ini_set('max_input_time', '600');
+$php_default_socket_timeout = 600;
+// ini_set('default_socket_timeout', '600');
 
 // show or hide calendar, world clock, calculator, chat and CKEditor
 // Do NOT remove the quotes if you set these to false!
@@ -38,8 +50,8 @@ $CHAT_DISPLAY = 'true';
 $USE_RTE = 'true';
 
 // helpdesk support email id and support name (Example: 'support@vtiger.com' and 'vtiger support')
-$HELPDESK_SUPPORT_EMAIL_ID = 'info@javanile.org';
-$HELPDESK_SUPPORT_NAME = 'your-support name';
+$HELPDESK_SUPPORT_EMAIL_ID = 'support@genesisresource.com';
+$HELPDESK_SUPPORT_NAME = 'Genesis Resource Support';
 $HELPDESK_SUPPORT_EMAIL_REPLY_ID = $HELPDESK_SUPPORT_EMAIL_ID;
 
 /* database configuration
@@ -136,7 +148,7 @@ $upload_dir = 'cache/upload/';
 
 // maximum file size for uploaded files in bytes also used when uploading import files
 // upload_maxsize default value = 3000000
-$upload_maxsize = 3145728; //3MB
+$upload_maxsize = 52428800; //50MB
 
 // flag to allow export functionality
 // 'all' to allow anyone to use exports
@@ -224,8 +236,8 @@ $application_unique_key = '4fb0ce8557702081d08b32ae0c4e9849';
 // trim descriptions, titles in listviews to this value
 $listview_max_textlength = 40;
 
-// Maximum time limit for PHP script execution (in seconds)
-$php_max_execution_time = 0;
+// Maximum time limit for PHP script execution (in seconds) changed from 0 on 8-18-2020
+$php_max_execution_time = 600;
 
 // Set the default timezone as per your preference
 $default_timezone = 'UTC';
@@ -237,6 +249,9 @@ if (isset($default_timezone) && function_exists('date_default_timezone_set')) {
 
 //Set the default layout
 $default_layout = 'v7';
+
+//Maximiun scheduled workflows default value set to 10
+$max_scheduled_workflows = 100;
 
 include_once 'config.security.php';
 require_once '/usr/src/vtiger/vtiger-functions.php';
