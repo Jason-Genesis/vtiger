@@ -1,5 +1,5 @@
 FROM php:7.3.12-apache
-LABEL maintainer="Francesco Bianco <info@javanile.org>"
+LABEL maintainer="Jason Robinson <jason@genesisresource.com>"
 
 ENV VT_VERSION="7.2.0" \
     DATABASE_PACKAGE="mariadb-server-10.3" \
@@ -9,7 +9,6 @@ COPY php.ini /usr/local/etc/php/
 COPY vtiger.json .symvol /usr/src/vtiger/
 COPY vtiger-ssl.* /etc/apache2/ssl/
 COPY 000-default.conf /etc/apache2/sites-available/
-COPY ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y zlib1g-dev libc-client-dev libkrb5-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libxml2-dev cron rsyslog zip unzip socat vim nano libzip-dev && \
@@ -33,7 +32,7 @@ RUN apt-get update && \
     vtiger permissions --fix && \
     mv .symvol /var/www/html && \
     mkdir -p volume /var/lib/vtiger && \
-    apt-get clean && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* 
+    apt-get clean && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 COPY vtiger-*.sh /usr/local/bin/
 COPY vtiger-*.php /usr/src/vtiger/
@@ -53,7 +52,7 @@ WORKDIR /app
 
 ENV VT_ADMIN_USER="admin" \
     VT_ADMIN_PASSWORD="admin" \
-    VT_ADMIN_EMAIL="jason@genesisresource.com" \
+    VT_ADMIN_EMAIL="admin@localhost.lan" \
     VT_CURRENCY_NAME="USA, Dollars" \
     MYSQL_HOST="mysql" \
     MYSQL_DATABASE="vtiger"
