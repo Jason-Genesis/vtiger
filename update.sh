@@ -24,6 +24,7 @@ files=(
     vtiger-autoload.php
     vtiger-functions.php
     LoggerManager.php
+    ioncube_loader_lin_7.2.so
 )
 
 for version in "${!versions[@]}"; do
