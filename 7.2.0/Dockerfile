@@ -1,5 +1,4 @@
-FROM php:7.2.33-apache 
-#FROM php:7.3.12-apache
+FROM php:7.3.12-apache
 LABEL maintainer="Francesco Bianco <info@javanile.org>"
 
 ENV VT_VERSION="7.2.0" \
@@ -10,7 +9,6 @@ COPY php.ini /usr/local/etc/php/
 COPY vtiger.json .symvol /usr/src/vtiger/
 COPY vtiger-ssl.* /etc/apache2/ssl/
 COPY 000-default.conf /etc/apache2/sites-available/
-COPY vtigersrc /usr/src/vtiger/vtigercrm/
 COPY ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/
 
 RUN apt-get update && \
