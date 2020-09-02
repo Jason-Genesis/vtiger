@@ -9,7 +9,7 @@ if [[ -z "$version" ]]; then
 fi
 
 if [[ ! -d "$version" ]]; then
-    echo "Version error: The specified version not exists."
+    echo "Version error: The specified version does not exist."
     exit 1
 fi
 
@@ -18,8 +18,8 @@ fi
 #docker-compose run --rm debian
 rm -fr ./vtiger
 
-docker build -t javanile/vtiger:${version} ${version}
-docker push javanile/vtiger:${version}
+docker build -t gridev/vtiger:${version} ${version}
+docker push gridev/vtiger:${version}
 
 git add . > /dev/null
 git commit -am "$*"
