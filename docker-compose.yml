@@ -33,7 +33,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=secret
     ports:
-      - 3306:3306
+      - 23306:3306
     volumes:
       - mysql:/var/lib/mysql:rw
       - ./:/vtiger:rw
