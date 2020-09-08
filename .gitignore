@@ -8,3 +8,4 @@ develop-install.sh
 !/develop-install.sh
 build.log
 /.vs
+/backup
