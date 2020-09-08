@@ -1,4 +1,4 @@
-FROM php:7.3.12-apache
+FROM php:7.2.33-apache
 LABEL maintainer="Jason Robinson <jason@genesisresource.com>"
 
 ENV VT_VERSION="7.2.0" \
